@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Demo Modified rot.js</title>
+      <script type="text/javascript" src="modified.rot.js"></script>
+      <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+          var params = { width: 10, height: 3, fontSize: 48 },
+              small = new ROT.Display(params),
+              medium = new ROT.Display(params),
+              handle = function(e) {
+                if (e.touches === undefined || e.touches.length > 0) {
+                  [small, medium].forEach(function(c) {
+                    var loc = c.eventToPosition(e), i;
+                    for (i = 0; i < 10; i++)
+                      c.draw(i, 2, '');
+                    if (loc[0] != -1 && loc[1] != -1) {
+                      c.drawText(0, 2, 'x: ' + loc[0] + ', y: ' + loc[1]);
+                    }
+                  });
+                }
+              };
+
+          small.getContainer().style.width = '50%';
+          medium.getContainer().style.width = '100%';
+
+          document.getElementById("small").appendChild(small.getContainer());
+          document.getElementById("medium").appendChild(medium.getContainer());
+
+          [small, medium].forEach(function(c) {
+            c.drawText(0, 0, 'Click:');
+            c.drawText(0, 1, '0 2 4 6 8');
+          });
+
+          window.addEventListener("mouseup", handle);
+          window.addEventListener("touchend", handle);
+        });
+      </script>
+  </head>
+  <body>
+    <div id="small"></div>
+    <div style="height: 100px;"></div>
+    <div id="medium"></div>
+  </body>
+</html>
